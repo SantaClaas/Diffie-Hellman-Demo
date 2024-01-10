@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diffie Hellman Demo</title>
+</head>
+
+<body>
+    <h1>Diffie Hellmann</h1>
+
+    <fieldset>
+        <legend>Public Key</legend>
+        <!-- A large prime number for security -->
+        <label for="g">g</label>
+        <input type="number" id="g" value="5">
+        <!-- Or n, a small prime number -->
+        <label for="n">n</label>
+        <input type="number" id="n" value="23">
+    </fieldset>
+
+
+    <label for="secret">Secret</label>
+    <input type="number" id="secret">
+    <script src="/js.js"></script>
+
+</body>
+
+</html>
