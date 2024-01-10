@@ -50,9 +50,10 @@ function App() {
     return Math.pow(theirPublicKey(), privateKey()) % n();
   };
 
+  // TODO add public and private area
   return (
     <main>
-      <h1>Diffie Hellman Demo</h1>
+      <h1 class="text-3xl font-bold">Diffie Hellman Demo</h1>
 
       <ol>
         <li>
