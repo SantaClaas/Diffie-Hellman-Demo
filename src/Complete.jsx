@@ -61,7 +61,6 @@ function Variable({
 
 function Complete() {
   const [alicePrivateKey, setAlicePrivateKey] = createSignal(null);
-  const [isBobEnabled, setIsBobEnabled] = createSignal(false);
   const [bobPrivateKey, setBobPrivateKey] = createSignal(null);
 
   const [g, setG] = createSignal(5);
