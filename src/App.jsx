@@ -213,6 +213,7 @@ function App() {
             id="bobPublicKey"
             variableName="B"
             textClass="text-blue-500 font-bold text-xl italic"
+            onInput={(event) => setBobPublicKey(event.target.value * 1)}
           />
         </div>
       </section>
@@ -242,7 +243,6 @@ function App() {
         <p class="font-semibold">
           {/* "A" just for spacing */}
           <span class="font-bold text-blue-500 text-transparent">B</span> ={" "}
-          <span class="font-bold text-blue-500">{alicePublicKey() ?? "?"}</span>{" "}
           {function () {
             if (!alicePublicKey())
               return (
@@ -261,6 +261,12 @@ function App() {
                   <span class="text-blue-500 font-bold italic">B</span>)
                 </span>
               );
+
+            return (
+              <span class="text-red-500 font-bold italic">
+                {sharedSecret()}
+              </span>
+            );
           }}
         </p>
       </section>
