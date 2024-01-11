@@ -1,7 +1,15 @@
 /* @refresh reload */
 import { render } from "solid-js/web";
+import { Router, Route } from "@solidjs/router";
 
 import "./index.css";
-import App from "./App";
+import Complete from "./Complete";
 
-render(() => <App />, document.body);
+render(
+  () => (
+    <Router>
+      <Route path="/" component={Complete} />
+    </Router>
+  ),
+  document.body
+);
