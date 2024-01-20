@@ -4,13 +4,13 @@ import { Router, Route } from "@solidjs/router";
 
 import "./index.css";
 import Complete from "./Complete";
-import Test from "./Test";
+import Simple from "./Simple";
 
 render(
   () => (
     <Router>
-      <Route path="/" component={Complete} />
-      <Route path="/test" component={Test} />
+      <Route path="/complete" component={Complete} />
+      <Route path="/simple" component={Simple} />
     </Router>
   ),
   document.body
