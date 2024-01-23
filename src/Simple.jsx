@@ -4,34 +4,41 @@ import { createSignal } from "solid-js";
 
 function Simple() {
   // Usually 2000 or 4000 bits long
-  const n = 23,
-    g = 5;
+  const [n, setN] = createSignal(23n);
+  const [g, setG] = createSignal(5n);
+
   const [alicePrivateKey, setAlicePrivateKey] = createSignal(null);
   const alicePublicKey = () =>
-    alicePrivateKey() ? Math.pow(g, alicePrivateKey()) % n : null;
+    alicePrivateKey() ? g() ** alicePrivateKey() % n() : null;
 
   const [bobPublicKey, setBobPublicKey] = createSignal(null);
   function handlePrivateKeyInput(setPrivateKey) {
     return (event) => {
-      if (event.target.value > n) {
+      if (event.target.value > n()) {
         console.debug("Private key has to be smaller than n");
+
         return;
       }
-      if (event.target.value < 1) {
+
+      if (event.target.value < 1n) {
         console.debug("Private key has to be bigger than 0");
         return;
       }
 
-      setPrivateKey(event.target.value);
+      setPrivateKey(BigInt(event.target.value));
     };
   }
+
   const sharedSecret = () => {
-    if (!bobPublicKey()) {
+    if (!bobPublicKey() || !alicePrivateKey()) {
       return null;
     }
 
-    return Math.pow(bobPublicKey(), alicePrivateKey()) % n;
+    return bobPublicKey() ** alicePrivateKey() % n();
   };
+
+  let alicePrivateKeyInput;
+  let bobPublicKeyInput;
   return (
     <main class="w-max mx-auto">
       <div class="mb-3">
@@ -44,6 +51,7 @@ function Simple() {
           textClass="text-red-500 font-bold text-2xl"
           min={1}
           max={23}
+          step={1}
           onInput={handlePrivateKeyInput(setAlicePrivateKey)}
         />
       </div>
@@ -60,16 +68,18 @@ function Simple() {
         <p class="font-semibold">
           {/* "A" just for spacing */}
           <span class="font-bold text-blue-500 text-transparent">A</span> ={" "}
-          <span class="font-bold text-blue-500">{g()}</span>
+          <span class="font-bold text-blue-500">{g().toString()}</span>
           <sup class="font-bold text-lg text-red-500">
-            {alicePrivateKey() || "a"}
+            {alicePrivateKey()?.toString() || "a"}
           </sup>{" "}
-          mod <span class="font-bold text-blue-500">{n}</span>
+          mod <span class="font-bold text-blue-500">{n().toString()}</span>
         </p>
         <p class="font-semibold">
           {/* "A" just for spacing */}
           <span class="font-bold text-blue-500 text-transparent">A</span> ={" "}
-          <span class="font-bold text-blue-500">{alicePublicKey() ?? "?"}</span>{" "}
+          <span class="font-bold text-blue-500">
+            {alicePublicKey()?.toString() ?? "?"}
+          </span>{" "}
           {!alicePublicKey() && (
             <span class="font-normal">
               {" "}
@@ -88,7 +98,10 @@ function Simple() {
           id="bobPublicKey"
           variableName="B"
           textClass="text-blue-500 font-bold text-xl italic"
-          onInput={(event) => setBobPublicKey(event.target.value * 1)}
+          onInput={(event) => {
+            setBobPublicKey(BigInt(event.target.value));
+          }}
+          ref={bobPublicKeyInput}
         />
       </div>
 
@@ -105,12 +118,12 @@ function Simple() {
           {/* "A" just for spacing */}
           <span class="font-bold text-blue-500 text-transparent">B</span> ={" "}
           <span class="font-bold text-blue-500 italic">
-            {bobPublicKey() || "B"}
+            {bobPublicKey()?.toString() || "B"}
           </span>
           <sup class="font-bold text-lg text-red-500">
-            {alicePrivateKey() || "a"}
+            {alicePrivateKey()?.toString() || "a"}
           </sup>{" "}
-          mod <span class="font-bold text-blue-500">{n()}</span>
+          mod <span class="font-bold text-blue-500">{n().toString()}</span>
         </p>
         <p class="font-semibold">
           {/* "A" just for spacing */}
@@ -137,7 +150,7 @@ function Simple() {
 
             return (
               <span class="text-red-500 font-bold italic">
-                {sharedSecret()}
+                {sharedSecret()?.toString()}
               </span>
             );
           }}
