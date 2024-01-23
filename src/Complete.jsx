@@ -1,23 +1,6 @@
 import { createEffect, createSignal } from "solid-js";
 
-function isPrime(number) {
-  if (number === 2) {
-    return true;
-  }
-  if (number % 2 === 0) {
-    return false;
-  }
-
-  for (let i = 3; i < Math.sqrt(number); i += 2) {
-    if (number % i === 0) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function Variable({
+export function Variable({
   variableName,
   id,
   textClass = "text-gray-500 sm:text-sm",
@@ -55,21 +38,6 @@ function Complete() {
   const bobPublicKey = () =>
     bobPrivateKey() ? Math.pow(g(), bobPrivateKey()) % n() : null;
 
-  function handlePrivateKeyInput(setPrivateKey) {
-    return (event) => {
-      if (event.target.value > n()) {
-        console.debug("Private key has to be smaller than n");
-        return;
-      }
-      if (event.target.value < 1) {
-        console.debug("Private key has to be bigger than 0");
-        return;
-      }
-
-      setPrivateKey(event.target.value);
-    };
-  }
-
   // const [bobPublicKey, setBobPublicKey] = createSignal(null);
 
   const sharedSecret = () => {
@@ -100,6 +68,21 @@ function Complete() {
 
   // Hiding public key for simplicity but make it optionally visible later
   const isPublicKeyHidden = true;
+  function handlePrivateKeyInput(setPrivateKey) {
+    return (event) => {
+      if (event.target.value > n()) {
+        console.debug("Private key has to be smaller than n");
+        return;
+      }
+      if (event.target.value < 1) {
+        console.debug("Private key has to be bigger than 0");
+        return;
+      }
+
+      setPrivateKey(event.target.value);
+    };
+  }
+
   // TODO add public and private area
   return (
     <main class="grid grid-cols-3 gap-4">

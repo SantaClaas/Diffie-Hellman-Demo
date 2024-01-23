@@ -26,3 +26,8 @@ Your app is ready to be deployed!
 ## Deployment
 
 Learn more about deploying your application with the [documentations](https://vitejs.dev/guide/static-deploy.html)
+
+## RSA videos
+
+https://youtu.be/4zahvcJ9glg
+https://youtu.be/Z8M2BTscoD4
